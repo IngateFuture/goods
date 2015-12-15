@@ -27,13 +27,18 @@ module Goods
   end
 
   def self.from_io(xml_io, url=nil, encoding=nil)
-    validator = XML::Validator.new
-    if validator.valid? xml_io
-      xml_io.rewind
-      Catalog.new(io: xml_io, url: url, encoding: encoding)
-    else
-      raise XML::InvalidFormatError, validator.error
-    end
+    # Отключил, т.к. на текущий момент dtd не содержит
+    # некоторые элементы описанные в документации и встречающиеся у клиентов
+    #
+    #validator = XML::Validator.new
+    #if validator.valid? xml_io
+      #xml_io.rewind
+      #Catalog.new(io: xml_io, url: url, encoding: encoding)
+    #else
+      #raise XML::InvalidFormatError, validator.error
+    #end
+    xml_io.rewind
+    Catalog.new(io: xml_io, url: url, encoding: encoding)
   end
 
   private
