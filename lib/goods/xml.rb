@@ -155,7 +155,7 @@ module Goods
 
     def extract_text(node, xpath = nil, default = nil)
       target = if xpath
-        node.xpath(xpath).first
+        node.search(xpath).first
       else
         node
       end
