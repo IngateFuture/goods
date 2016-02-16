@@ -142,6 +142,10 @@ describe Goods::XML do
         expect(printer[:price]).to eq(15000.00)
       end
 
+      it "should have a oldprice" do
+        expect(printer[:oldprice]).to eq(17000.00)
+      end
+
       it "should have a currency_id" do
         expect(printer[:currency_id]).to eq("RUR")
       end

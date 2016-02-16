@@ -33,6 +33,7 @@
             <offer id=" 123 " type="vendor.model" bid="13" cbid="20">
                 <url>http://magazin.ru/product_page.asp?pid=14344</url>
                 <price>15000</price>
+                <oldprice>17000</oldprice>
                 <currencyId>
                   RUR
                 </currencyId>
@@ -62,6 +63,7 @@
 
             <offer id="1234" type="book" bid="17" available="false">
                 <price>100</price>
+                <oldprice>150</oldprice>
                 <currencyId>RUR</currencyId>
                 <categoryId type="Own">13</categoryId>
                 <delivery>true</delivery>

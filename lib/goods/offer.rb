@@ -29,6 +29,5 @@ module Goods
       validate :currency_id, proc { |currency_id| currency_id }
       validate :price, proc { |price| price && price >= 0 }
     end
-
   end
 end
