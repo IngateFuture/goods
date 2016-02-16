@@ -3,8 +3,10 @@ module Goods
     attr_accessor :category, :currency, :price
     attr_field :category_id, :currency_id, :available, :description,
                :model, :name, :picture, :vendor, :url
-    attr_field :price, :oldprice, type: :float
+    attr_field :price, type: :float
     attr_field :type_prefix, :isbn, :adult
+    # NOTE: не указываем, что это float, чтобы не кастился nil к 0
+    attr_field :oldprice
 
     def convert_currency(other_currency)
       self.price *= currency.in(other_currency)
