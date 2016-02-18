@@ -2,9 +2,9 @@ module Goods
   class Catalog
     attr_reader :url, :name, :company, :categories, :currencies, :offers
 
-    def initialize(params)
-      if params[:io]
-        from_io(params[:io], params[:url], params[:encoding])
+    def initialize io:, url:, encoding:
+      if io
+        from_io_or_string(io, url, encoding)
       else
         raise ArgumentError, "should provide either :string or :url param"
       end
@@ -25,7 +25,7 @@ module Goods
 
     private
 
-    def from_io(xml_io, url, encoding)
+    def from_io_or_string(xml_io, url, encoding)
       @xml = XML.new(xml_io, url, encoding)
 
       @name = @xml.name

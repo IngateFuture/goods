@@ -15,7 +15,7 @@ require "goods/catalog"
 
 module Goods
   def self.from_string(xml_string, encoding=nil)
-    from_io(StringIO.new(xml_string), nil, encoding)
+    Catalog.new(io: xml_string, url: nil, encoding: encoding)
   end
 
   def self.from_url(url, encoding=nil)

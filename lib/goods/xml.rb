@@ -4,8 +4,8 @@ module Goods
   class XML
     class InvalidFormatError < StandardError; end
 
-    def initialize(io, url = nil, encoding = nil)
-      @xml_source = Nokogiri::XML::Document.parse(io, url, encoding)
+    def initialize(string_or_io, url = nil, encoding = nil)
+      @xml_source = Nokogiri::XML::Document.parse(string_or_io, url, encoding)
     end
 
     def categories
