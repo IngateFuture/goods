@@ -140,8 +140,8 @@ module Goods
         offer_hash[property] = extract_text(offer, xpath)
       end
 
-      offer_hash[:price] = extract_text(offer, "price")&.to_f
-      offer_hash[:oldprice] = extract_text(offer, "oldprice")&.to_f
+      offer_hash[:price] = extract_text(offer, "price")&.tr(',', '')&.to_f
+      offer_hash[:oldprice] = extract_text(offer, "oldprice")&.tr(',', '')&.to_f
 
       offer_hash
     end
