@@ -2,7 +2,8 @@ module Goods
   class Offer < Element
     attr_accessor :category, :currency, :price
     attr_field :category_id, :currency_id, :available, :description,
-               :model, :name, :picture, :vendor, :url
+               :model, :name, :picture, :vendor, :url,
+               :delivery, :pickup
     attr_field :price, type: :float
     attr_field :type_prefix, :isbn, :adult
     # NOTE: не указываем, что это float, чтобы не кастился nil к 0

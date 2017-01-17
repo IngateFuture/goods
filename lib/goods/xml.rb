@@ -125,17 +125,19 @@ module Goods
       end
 
       {
-        url: "url",
-        currency_id: "currencyId",
-        category_id: "categoryId",
-        picture: "picture",
-        description: "description",
-        name: "name",
-        type_prefix: "typePrefix",
-        vendor: "vendor",
-        model: "model",
+        url: 'url',
+        currency_id: 'currencyId',
+        category_id: 'categoryId',
+        picture: 'picture',
+        description: 'description',
+        name: 'name',
+        type_prefix: 'typePrefix',
+        vendor: 'vendor',
+        model: 'model',
         isbn: 'ISBN',
-        adult: 'adult'
+        adult: 'adult',
+        delivery: 'delivery',
+        pickup: 'pickup'
       }.each do |property, xpath|
         offer_hash[property] = extract_text(offer, xpath)
       end
