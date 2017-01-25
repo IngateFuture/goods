@@ -1,3 +1,4 @@
+<!-- https://yandex.ru/support/partnermarket/yml/about-yml.xml -->
 <!ELEMENT yml_catalog (shop)>
 <!ATTLIST yml_catalog
     date CDATA #REQUIRED>

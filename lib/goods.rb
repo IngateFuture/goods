@@ -1,17 +1,18 @@
 require 'open-uri'
-require "goods/version"
-require "goods/xml/validator"
-require "goods/xml"
-require "goods/util"
-require "goods/element"
-require "goods/container"
-require "goods/category"
-require "goods/categories_list"
-require "goods/offer"
-require "goods/offers_list"
-require "goods/currency"
-require "goods/currencies_list"
-require "goods/catalog"
+require 'goods/version'
+require 'goods/xml/validator'
+require 'goods/xml'
+require 'goods/util'
+require 'goods/element'
+require 'goods/container'
+require 'goods/category'
+require 'goods/categories_list'
+require 'goods/offer'
+require 'goods/offers_list'
+require 'goods/param'
+require 'goods/currency'
+require 'goods/currencies_list'
+require 'goods/catalog'
 
 module Goods
   def self.from_string(xml_string, encoding=nil)

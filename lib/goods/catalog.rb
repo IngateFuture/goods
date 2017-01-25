@@ -38,4 +38,3 @@ module Goods
     end
   end
 end
-

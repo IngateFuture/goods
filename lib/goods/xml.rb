@@ -1,4 +1,4 @@
-require "nokogiri"
+require 'nokogiri'
 
 module Goods
   class XML
@@ -9,9 +9,7 @@ module Goods
     end
 
     def categories
-      @categories ||= begin
-        Util::CategoriesGraph.new(extract_categories).topsorted
-      end
+      @categories ||= Util::CategoriesGraph.new(extract_categories).topsorted
     end
 
     def currencies
@@ -38,31 +36,30 @@ module Goods
       @url ||= extract_text shop_node, 'url'
     end
 
-
     private
 
-
     def catalog_node
-      @xml_source / "yml_catalog"
+      @xml_source / 'yml_catalog'
     end
 
     def shop_node
-      catalog_node / "shop"
+      catalog_node / 'shop'
     end
 
     def extract_catalog_generation_date
-      Time.parse(catalog_node.attribute("date").value)
+      Time.parse(catalog_node.attribute('date').value)
     end
 
+    #---------------------------------------------------------------------------
     # Categories part
+    #---------------------------------------------------------------------------
+
     def categories_node
-      shop_node / "categories" / "category"
+      shop_node / 'categories' / 'category'
     end
 
     def extract_categories
-      categories_node.map do |category|
-        category_node_to_hash(category)
-      end
+      categories_node.map { |v| category_node_to_hash(v) }
     end
 
     def category_node_to_hash(category)
@@ -74,26 +71,22 @@ module Goods
       }
     end
 
+    #---------------------------------------------------------------------------
     # Currencies part
+    #---------------------------------------------------------------------------
+
     def currencies_node
-      shop_node / "currencies" / "currency"
+      shop_node / 'currencies' / 'currency'
     end
 
     def extract_currencies
-      currencies_node.map do |currency|
-        currency_node_to_hash(currency)
-      end
+      currencies_node.map { |v| currency_node_to_hash(v) }
     end
 
     def currency_node_to_hash(currency)
-      currency_hash = {
-        id: extract_attribute(currency, "id")
-      }
+      currency_hash = { id: extract_attribute(currency, 'id') }
+      attributes_with_defaults = { rate: '1', plus: '0' }
 
-      attributes_with_defaults = {
-        rate: "1",
-        plus: "0"
-      }
       attributes_with_defaults.each do |attr, default|
         currency_hash[attr] = extract_attribute(currency, attr, default)
       end
@@ -101,21 +94,38 @@ module Goods
       currency_hash
     end
 
-    #Offers part
-    def offers_node
-      shop_node / "offers" / "offer"
+    #---------------------------------------------------------------------------
+    # Offers part
+    #---------------------------------------------------------------------------
+
+    def offer_nodes
+      shop_node / 'offers' / 'offer'
+    end
+
+    def offer_param_nodes offer_node
+      offer_node / 'param'
     end
 
     def extract_offers
-      offers_node.map do |offer|
-        offer_node_to_hash(offer)
+      offer_nodes.map do |v|
+        offer = ::Goods::Offer.new(offer_node_to_hash(v))
+        offer.params = offer_params(v)
+        offer
       end
     end
 
-    def offer_node_to_hash(offer)
+    def offer_node_to_hash(offer_node)
       offer_hash = {}
-      offer_hash = offer_hash.merge offer_attributes(offer)
 
+      # offer attributes
+      offer_hash = offer_hash.merge(
+        id: extract_attribute(offer_node, 'id'),
+        group_id: extract_attribute(offer_node, 'group_id'),
+        type: extract_attribute(offer_node, 'type'),
+        available: (extract_attribute(offer_node, 'available', 'true') == 'true')
+      )
+
+      # nested elements
       {
         url: 'url',
         currency_id: 'currencyId',
@@ -132,22 +142,27 @@ module Goods
         description: 'description',
         sales_notes: 'sales_notes',
         adult: 'adult'
-      }.each do |property, xpath|
-        offer_hash[property] = extract_text(offer, xpath)
+      }.each do |element, xpath|
+        offer_hash[element] = extract_text(offer_node, xpath)
       end
 
-      offer_hash[:price] = extract_text(offer, 'price')&.tr(',', '')&.to_f
-      offer_hash[:oldprice] = extract_text(offer, 'oldprice')&.tr(',', '')&.to_f
+      offer_hash[:price] = extract_text(offer_node, 'price')&.tr(',', '')&.to_f
+      offer_hash[:oldprice] = extract_text(offer_node, 'oldprice')&.tr(',', '')&.to_f
 
       offer_hash
     end
 
-    def offer_attributes offer
+    def offer_params offer_node
+      offer_param_nodes(offer_node).map do |v|
+        ::Goods::Param.new(offer_param_node_to_hash(v))
+      end
+    end
+
+    def offer_param_node_to_hash offer_param_node
       {
-        id: extract_attribute(offer, 'id'),
-        group_id: extract_attribute(offer, 'group_id'),
-        type: extract_attribute(offer, 'type'),
-        available: (extract_attribute(offer, 'available', 'true') == 'true')
+        name: extract_attribute(offer_param_node, 'name'),
+        unit: extract_attribute(offer_param_node, 'unit'),
+        value: extract_text(offer_param_node)
       }
     end
 

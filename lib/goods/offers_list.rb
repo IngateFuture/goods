@@ -7,9 +7,7 @@ module Goods
     def initialize(categories_list = nil, currencies_list = nil, offers = [])
       self.categories_list = categories_list
       self.currencies_list = currencies_list
-      offers.each do |offer|
-        add offer
-      end
+      offers.each { |offer| add(offer) }
     end
 
     def prune_categories(level)
