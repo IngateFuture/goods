@@ -4,6 +4,8 @@ module Goods
 
     attr_field :url
     attr_field :price, type: :float
+    # NOTE: don't specify float type so that nil is not cast to 0
+    attr_field :oldprice
     attr_field :currency_id
     attr_field :category_id
     attr_field :picture
@@ -25,10 +27,6 @@ module Goods
     attr_field :group_id
     attr_field :type
     attr_field :available
-
-    # NOTE: this field is not from DTD!
-    # NOTE: don't specify float type so that nil is not cast to 0
-    attr_field :oldprice
 
     def convert_currency(another_currency)
       self.price *= currency.in(another_currency)
