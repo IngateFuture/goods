@@ -66,7 +66,7 @@ module Goods
     end
 
     def category_node_to_hash(category)
-      parent_id = extract_attribute(category, "parentId")
+      parent_id = extract_attribute(category, 'parentId')
       {
         id: extract_attribute(category, :id),
         name: extract_text(category),
@@ -113,38 +113,42 @@ module Goods
     end
 
     def offer_node_to_hash(offer)
-      offer_hash = {
-        id: extract_attribute(offer, "id")
-      }
-
-      offer_hash[:available] = if attr = offer.attribute("available")
-        !! (attr.value =~ /true/)
-      else
-        true
-      end
+      offer_hash = {}
+      offer_hash = offer_hash.merge offer_attributes(offer)
 
       {
         url: 'url',
         currency_id: 'currencyId',
         category_id: 'categoryId',
         picture: 'picture',
-        description: 'description',
-        name: 'name',
+        pickup: 'pickup',
+        delivery: 'delivery',
         type_prefix: 'typePrefix',
         vendor: 'vendor',
+        vendor_code: 'vendorCode',
         model: 'model',
+        name: 'name',
         isbn: 'ISBN',
-        adult: 'adult',
-        delivery: 'delivery',
-        pickup: 'pickup'
+        description: 'description',
+        sales_notes: 'sales_notes',
+        adult: 'adult'
       }.each do |property, xpath|
         offer_hash[property] = extract_text(offer, xpath)
       end
 
-      offer_hash[:price] = extract_text(offer, "price")&.tr(',', '')&.to_f
-      offer_hash[:oldprice] = extract_text(offer, "oldprice")&.tr(',', '')&.to_f
+      offer_hash[:price] = extract_text(offer, 'price')&.tr(',', '')&.to_f
+      offer_hash[:oldprice] = extract_text(offer, 'oldprice')&.tr(',', '')&.to_f
 
       offer_hash
+    end
+
+    def offer_attributes offer
+      {
+        id: extract_attribute(offer, 'id'),
+        group_id: extract_attribute(offer, 'group_id'),
+        type: extract_attribute(offer, 'type'),
+        available: (extract_attribute(offer, 'available', 'true') == 'true')
+      }
     end
 
     def extract_attribute(node, attribute, default = nil)

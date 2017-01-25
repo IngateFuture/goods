@@ -1,6 +1,5 @@
 module Goods
   class Element
-
     def self.generate_accessor(field_name, type)
       define_method field_name do
         if field = instance_variable_get("@#{field_name}")
@@ -26,7 +25,7 @@ module Goods
     # This method can take several arguments with optional hash at the end.
     # Semantics is the same as with attr_* family of methods.
     #
-    # You can specify the type of field by providin {type: :some_type} hash as
+    # You can specify the type of field by providing {type: :some_type} hash as
     # the last argument. For example type: :float will call #to_f on resulting
     # value.
     def self.attr_field(*args)

@@ -13,7 +13,6 @@
     rate CDATA "1"
     plus CDATA "0">
 
-
 <!ELEMENT categories (category+)>
 <!ELEMENT category (#PCDATA)>
 <!ATTLIST category
@@ -25,12 +24,20 @@
 <!ELEMENT offers (offer+)>
 <!ELEMENT offer (url?, buyurl?, price, wprice?, currencyId, xCategory?, categoryId+, market_category?,
                  picture*, store?, pickup?, delivery?, deliveryIncluded?, local_delivery_cost?, orderingTime?,
-                 ((typePrefix?, vendor, vendorCode?, model, (provider, tarifplan?)?) |
+                 (
+                  <!-- Произвольный тип описания -->
+                  (typePrefix?, vendor, vendorCode?, model, (provider, tarifplan?)?) |
+                  <!-- Книги -->
                   (author?, name, publisher?, series?, year?, ISBN?, volume?, part?, language?, binding?, page_extent?, table_of_contents?) |
+                  <!-- Аудиокниги -->
                   (author?, name, publisher?, series?, year?, ISBN?, volume?, part?, language?, table_of_contents?, performed_by?, performance_type?, storage?, format?, recording_length?) |
+                  <!-- Музыкальная и видеопродукция -->
                   (artist?, title, year?, media?, starring?, director?, originalName?, country?) |
+                  <!-- Туры -->
                   (worldRegion?, country?, region?, days, dataTour*, name, hotel_stars?, room?, meal?, included, transport, price_min?, price_max?, options?) |
+                  <!-- Билеты на мероприятие -->
                   (name, place, hall?, hall_part?, date, is_premiere?, is_kids?) |
+                  <!-- Упрощенный тип описания -->
                   (name, vendor?, vendorCode?)
                  ),
                  aliases?, additional*, description?, sales_notes?, promo?,
@@ -43,8 +50,8 @@
 <!ATTLIST offer
     id CDATA #IMPLIED
     group_id CDATA #IMPLIED
-    type (vendor.model | book | audiobook | artist.title | tour | ticket | event-ticket) #IMPLIED
-    available (true | false) #IMPLIED
+    type (vendor.model|book|audiobook|artist.title|tour|ticket|event-ticket) #IMPLIED
+    available (true|false) #IMPLIED
     bid CDATA #IMPLIED
     cbid CDATA #IMPLIED>
 
@@ -144,5 +151,3 @@
 <!ELEMENT is_premiere (#PCDATA)>
 <!ELEMENT is_kids (#PCDATA)>
 <!ELEMENT date (#PCDATA)>
-
-
