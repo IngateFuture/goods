@@ -70,7 +70,7 @@ module Goods
       {
         id: extract_attribute(category, :id),
         name: extract_text(category),
-        parent_id: parent_id != 0 ? parent_id : nil
+        parent_id: parent_id == '0' ? nil: parent_id
       }
     end
 
