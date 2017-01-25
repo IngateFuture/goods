@@ -66,13 +66,12 @@ module Goods
     end
 
     def category_node_to_hash(category)
-      category_hash = {
+      parent_id = extract_attribute(category, "parentId")
+      {
         id: extract_attribute(category, :id),
-        name: extract_text(category)
+        name: extract_text(category),
+        parent_id: parent_id != 0 ? parent_id : nil
       }
-      category_hash[:parent_id] = extract_attribute(category, "parentId")
-
-      category_hash
     end
 
     # Currencies part
