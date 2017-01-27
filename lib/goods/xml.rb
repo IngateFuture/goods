@@ -47,7 +47,7 @@ module Goods
     end
 
     def extract_catalog_generation_date
-      Time.parse(catalog_node.attribute('date').value)
+      Time.zone.parse(catalog_node.attribute('date').value)
     end
 
     #---------------------------------------------------------------------------
