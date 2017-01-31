@@ -173,6 +173,8 @@ module Goods
 
     def offer_age offer_node
       age_node = offer_age_node(offer_node)
+      return if age_node.nil?
+
       ::Goods::Age.new offer_age_node_to_hash(age_node)
     end
 
