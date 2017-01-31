@@ -1,6 +1,6 @@
 module Goods
   class Offer < Element
-    attr_accessor :category, :currency, :price, :params
+    attr_accessor :age, :category, :currency, :price, :params
 
     attr_field :url
     attr_field :price, type: :float

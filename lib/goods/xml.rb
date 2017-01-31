@@ -106,10 +106,15 @@ module Goods
       offer_node / 'param'
     end
 
+    def offer_age_node offer_node
+      (offer_node / 'age').first
+    end
+
     def extract_offers
       offer_nodes.map do |v|
         offer = ::Goods::Offer.new(offer_node_to_hash(v))
         offer.params = offer_params(v)
+        offer.age = offer_age(v)
         offer
       end
     end
@@ -163,6 +168,18 @@ module Goods
         name: extract_attribute(offer_param_node, 'name'),
         unit: extract_attribute(offer_param_node, 'unit'),
         value: extract_text(offer_param_node)
+      }
+    end
+
+    def offer_age offer_node
+      age_node = offer_age_node(offer_node)
+      ::Goods::Age.new offer_age_node_to_hash(age_node)
+    end
+
+    def offer_age_node_to_hash offer_age_node
+      {
+        unit: extract_attribute(offer_age_node, 'unit'),
+        value: extract_text(offer_age_node)
       }
     end
 
