@@ -146,7 +146,8 @@ module Goods
         isbn: 'ISBN',
         description: 'description',
         sales_notes: 'sales_notes',
-        adult: 'adult'
+        adult: 'adult',
+        barcode: 'barcode'
       }.each do |element, xpath|
         offer_hash[element] = extract_text(offer_node, xpath)
       end

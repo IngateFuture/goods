@@ -22,6 +22,7 @@ module Goods
     attr_field :description
     attr_field :sales_notes
     attr_field :adult
+    attr_field :barcode
 
     # offer attributes
     attr_field :group_id
