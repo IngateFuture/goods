@@ -102,6 +102,10 @@ module Goods
       shop_node / 'offers' / 'offer'
     end
 
+    def offer_barcode_nodes offer_node
+      offer_node / 'barcode'
+    end
+
     def offer_param_nodes offer_node
       offer_node / 'param'
     end
@@ -113,8 +117,9 @@ module Goods
     def extract_offers
       offer_nodes.map do |v|
         offer = ::Goods::Offer.new(offer_node_to_hash(v))
-        offer.params = offer_params(v)
         offer.age = offer_age(v)
+        offer.barcodes = offer_barcodes(v)
+        offer.params = offer_params(v)
         offer
       end
     end
@@ -146,8 +151,7 @@ module Goods
         isbn: 'ISBN',
         description: 'description',
         sales_notes: 'sales_notes',
-        adult: 'adult',
-        barcode: 'barcode'
+        adult: 'adult'
       }.each do |element, xpath|
         offer_hash[element] = extract_text(offer_node, xpath)
       end
@@ -156,20 +160,6 @@ module Goods
       offer_hash[:oldprice] = extract_text(offer_node, 'oldprice')&.tr(',', '')&.to_f
 
       offer_hash
-    end
-
-    def offer_params offer_node
-      offer_param_nodes(offer_node).map do |v|
-        ::Goods::Param.new(offer_param_node_to_hash(v))
-      end
-    end
-
-    def offer_param_node_to_hash offer_param_node
-      {
-        name: extract_attribute(offer_param_node, 'name'),
-        unit: extract_attribute(offer_param_node, 'unit'),
-        value: extract_text(offer_param_node)
-      }
     end
 
     def offer_age offer_node
@@ -183,6 +173,24 @@ module Goods
       {
         unit: extract_attribute(offer_age_node, 'unit'),
         value: extract_text(offer_age_node)
+      }
+    end
+
+    def offer_barcodes offer_node
+      offer_barcode_nodes(offer_node).map { |v| extract_text(v) }
+    end
+
+    def offer_params offer_node
+      offer_param_nodes(offer_node).map do |v|
+        ::Goods::Param.new(offer_param_node_to_hash(v))
+      end
+    end
+
+    def offer_param_node_to_hash offer_param_node
+      {
+        name: extract_attribute(offer_param_node, 'name'),
+        unit: extract_attribute(offer_param_node, 'unit'),
+        value: extract_text(offer_param_node)
       }
     end
 

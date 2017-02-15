@@ -1,6 +1,6 @@
 module Goods
   class Offer < Element
-    attr_accessor :age, :category, :currency, :price, :params
+    attr_accessor :age, :category, :currency, :price, :params, :barcodes
 
     attr_field :url
     attr_field :price, type: :float
@@ -22,7 +22,6 @@ module Goods
     attr_field :description
     attr_field :sales_notes
     attr_field :adult
-    attr_field :barcode
 
     # offer attributes
     attr_field :group_id
