@@ -14,6 +14,7 @@ require 'goods/age'
 require 'goods/currency'
 require 'goods/currencies_list'
 require 'goods/catalog'
+require 'goods/delivery_option'
 
 module Goods
   def self.from_string(xml_string, encoding=nil)

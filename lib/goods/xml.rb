@@ -16,6 +16,10 @@ module Goods
       @currencies ||= extract_currencies
     end
 
+    def delivery_options
+      @delivery_options ||= extract_delivery_options
+    end
+
     def offers
       @offers ||= extract_offers
     end
@@ -92,6 +96,28 @@ module Goods
       end
 
       currency_hash
+    end
+
+    #---------------------------------------------------------------------------
+    # Delivery options part
+    #---------------------------------------------------------------------------
+
+    def extract_delivery_options
+      delivery_options_node.map do |v|
+        ::Goods::DeliveryOption.new(delivery_option_node_to_hash(v))
+      end
+    end
+
+    def delivery_options_node
+      shop_node / 'delivery-options' / 'option'
+    end
+
+    def delivery_option_node_to_hash delivery_option
+      {
+        cost: extract_attribute(delivery_option, :cost),
+        days: extract_attribute(delivery_option, :days),
+        order_before: extract_attribute(delivery_option, 'order-before')
+      }
     end
 
     #---------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 module Goods
   class Catalog
     attr_reader :url, :name, :company, :categories, :currencies, :offers
+    attr_reader :delivery_options
 
     def initialize io:, url:, encoding:
       if io
@@ -34,6 +35,7 @@ module Goods
 
       @categories = CategoriesList.new(@xml.categories)
       @currencies = CurrenciesList.new(@xml.currencies)
+      @delivery_options = @xml.delivery_options
       @offers = OffersList.new(@categories, @currencies, @xml.offers)
     end
   end
