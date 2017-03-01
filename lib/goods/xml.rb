@@ -109,7 +109,7 @@ module Goods
     end
 
     def delivery_options_node
-      shop_node / 'delivery-options' / 'option'
+      shop_node > 'delivery-options' > 'option'
     end
 
     def delivery_option_node_to_hash delivery_option
