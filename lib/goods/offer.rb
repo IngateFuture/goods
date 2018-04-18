@@ -11,6 +11,8 @@ module Goods
     attr_field :picture
     attr_field :pickup
     attr_field :delivery
+    attr_field :store
+    attr_field :weight
 
     # fields that depend on specific feed type
     attr_field :type_prefix

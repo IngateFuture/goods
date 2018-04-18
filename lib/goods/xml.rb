@@ -169,6 +169,8 @@ module Goods
         picture: 'picture',
         pickup: 'pickup',
         delivery: 'delivery',
+        store: 'store',
+        weight: 'weight',
         type_prefix: 'typePrefix',
         vendor: 'vendor',
         vendor_code: 'vendorCode',

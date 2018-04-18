@@ -66,6 +66,8 @@
 <!ELEMENT picture (#PCDATA)>
 <!ELEMENT pickup (#PCDATA)>
 <!ELEMENT delivery (#PCDATA)>
+<!ELEMENT store (#PCDATA)>
+<!ELEMENT weight (#PCDATA)>
 <!ELEMENT deliveryIncluded EMPTY>
 <!ELEMENT local_delivery_cost (#PCDATA)>
 <!ELEMENT orderingTime (onstock?, ordering, deliveryTime?)>
